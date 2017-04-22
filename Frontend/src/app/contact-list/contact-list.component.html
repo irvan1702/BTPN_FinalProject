@@ -1,0 +1,10 @@
+<div class="contact-list">
+<md-list>
+  <h3 md-subheader>Contact</h3>
+  <md-list-item *ngFor="let contact of contacts">
+    <md-icon md-list-icon>contact</md-icon>
+    <p md-line>{{contact.name}}</p>
+    <p md-line> {{contact.phone}} </p>
+  </md-list-item>
+</md-list>
+</div>
