@@ -7,15 +7,28 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "Employee")
 public class Employee {
 	@Id
-	@Column(name = "emp_id")
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private long empId;
+	@GeneratedValue(
+		strategy = GenerationType.SEQUENCE,
+		generator = "employee_seq"
+	)
+	@SequenceGenerator(
+		name = "employee_seq",
+		sequenceName = "employee_seq"
+	)
+	@Column(
+		name = "employee_id",
+		nullable = false
+	)
+	private Integer empId;
 	@Column(name = "first_name", nullable = false)
 	private String firstName;
 	@Column(name = "last_name", nullable = false)
@@ -44,17 +57,46 @@ public class Employee {
 	private String division;
 	@Column(name = "email", nullable = false)
 	private String email;
+	@Column(nullable = true)
+	private String photo;
+
+	@ManyToOne
+	@JoinColumn(name = "loc_id", nullable = true)
+	private Location location;
 	
 	
 	public Employee() {
 		
 	}
 
-	public long getEmpId() {
+	public Employee(Integer empId, String firstName, String lastName, String gender, Date dateOfBirth,
+			String nationality, String maritalStatus, String phone, String subDivision, String status, Date suspendDate,
+			Date hiredDate, String grade, String division, String email, String photo, Location location) {
+		super();
+		this.empId = empId;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.gender = gender;
+		this.dateOfBirth = dateOfBirth;
+		this.nationality = nationality;
+		this.maritalStatus = maritalStatus;
+		this.phone = phone;
+		this.subDivision = subDivision;
+		this.status = status;
+		this.suspendDate = suspendDate;
+		this.hiredDate = hiredDate;
+		this.grade = grade;
+		this.division = division;
+		this.email = email;
+		this.photo = photo;
+		this.location = location;
+	}
+
+	public Integer getEmpId() {
 		return empId;
 	}
 
-	public void setEmpId(long empId) {
+	public void setEmpId(Integer empId) {
 		this.empId = empId;
 	}
 
@@ -80,14 +122,6 @@ public class Employee {
 
 	public void setGender(String gender) {
 		this.gender = gender;
-	}
-
-	public Date getDateofBirth() {
-		return dateOfBirth;
-	}
-
-	public void setDateOfBirth(Date dateOfBirth) {
-		this.dateOfBirth = dateOfBirth;
 	}
 
 	public String getNationality() {
@@ -168,6 +202,26 @@ public class Employee {
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+	public String getPhoto() {
+		return photo;
+	}
+
+	public void setPhoto(String photo) {
+		this.photo = photo;
+	}
+
+	public Location getLocation() {
+		return location;
+	}
+
+	public void setLocation(Location location) {
+		this.location = location;
+	}
+
+	public Date getDateOfBirth() {
+		return dateOfBirth;
 	}
 	
 	

@@ -7,10 +7,12 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -34,21 +36,7 @@ public class EmployeeController {
 	
 	@PostMapping(value="/add")
 	@ResponseBody
-	public void save(@RequestBody String jsonObj)
-	{
-		mapper.setDateFormat(new SimpleDateFormat("yyyy/MM/dd"));
-		Employee e;
-		try {
-			e = mapper.readValue(jsonObj, Employee.class);
-			this.repository.save(e);
-		} catch (IOException e1) {
-			e1.printStackTrace();
-		}
-	}
-	
-	@PostMapping(value="/update")
-	@ResponseBody
-	public void edit(@RequestBody String jsonObj)
+	public void addEmployee(@RequestBody String jsonObj)
 	{
 		mapper.setDateFormat(new SimpleDateFormat("yyyy/MM/dd"));
 		Employee e;
@@ -67,25 +55,30 @@ public class EmployeeController {
 		return this.repository.findByLastNameOrFirstName(name, name);
 	}
 	
-//	@GetMapping(value="/delete/{id}")
-//	public void delete(@PathVariable long id){
-//		this.repository.delete(id);
-//	}
+	@GetMapping(value="/delete/{id}")
+	public void delete(@PathVariable Integer id){
+		this.repository.delete(id);
+	}
 	
-//	@GetMapping
-//	@ResponseBody
-//	public List<Employee> findByLastName(@PathVariable String lastName)
-//	{
-//		return this.repository.findByLastName(lastName);
-//
-//	}
-	
-	@PostMapping(value = "/getAll")
+	@GetMapping(value = "/getAll")
 	@ResponseBody
 	public Iterable<Employee> getAllEmployee()
 	{
-		return this.repository.findAll();
+		Sort.Order sorting = new Sort.Order(Sort.Direction.ASC, "firstName").ignoreCase();
+		return this.repository.findAll(new Sort(sorting));
 
+	}
+	@RequestMapping(method = {RequestMethod.PUT, RequestMethod.PATCH}, value="/{employeeId}")
+	public void update(@PathVariable Integer employeeId, @RequestBody Employee emp) {
+		Employee entity = this.repository.findOne(employeeId);
+		if (entity == null) {
+			throw new EmployeeNotFoundException();
+		}
+		else{
+			entity = emp;
+			this.repository.save(entity);
+		}
+		
 	}
 
 }
