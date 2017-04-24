@@ -1,3 +1,5 @@
 .contact-list {
-
+ overflow: hidden;
+    float:left;
+    width:30%;
 }
