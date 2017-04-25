@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ContactListComponent } from 'app/contact-list/contact-list.component'
 
 @Component({
 	selector: 'search-bar',
@@ -7,6 +8,17 @@ import { Component, OnInit } from '@angular/core';
 })
 
 export class SearchBarComponent implements OnInit {
+	
+
+	name;
+		constructor(private contact:ContactListComponent) {
+   
+  }
 
 	ngOnInit() { }
+
+	onChange(event) {
+    this.name = event.target.value;
+    this.contact.getEmployees(this.name);
+  }
 }

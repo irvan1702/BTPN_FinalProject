@@ -8,6 +8,7 @@ import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -47,7 +48,7 @@ public class EmployeeController {
 			e1.printStackTrace();
 		}
 	}
-	
+	@CrossOrigin(origins = "http://localhost:4200")
 	@GetMapping(value="/findByName")
 	@ResponseBody
 	public List<Employee> findByName(@RequestParam() String name)
@@ -61,6 +62,7 @@ public class EmployeeController {
 	}
 	
 	@GetMapping(value = "/getAll")
+	@CrossOrigin(origins = "http://localhost:4200")
 	@ResponseBody
 	public Iterable<Employee> getAllEmployee()
 	{

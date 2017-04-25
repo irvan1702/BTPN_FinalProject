@@ -10,9 +10,21 @@ export class AppService{
 
     }
     getAll(){
+        // let headers = new Headers();
+        // headers.append('Access-Control-Allow-Headers', 'Content-Type');
+        // headers.append('Access-Control-Allow-Methods', 'GET');
+        // headers.append('Access-Control-Allow-Origin', '*');
         return this.http.get('http://localhost:8080/employee/getAll')
         .map(response => {
             return response.json();
         });
+    }
+    searchName(name){
+        let searchParams = new URLSearchParams();
+        searchParams.append("name",name);
+        return this.http.get('http://localhost:8080/employee/findByName', { search: searchParams })
+      .map(response => {
+        return response.json();
+      });
     }
 }

@@ -2,7 +2,7 @@
     <md-toolbar color="accent">
         <md-icon svgIcon = "search"></md-icon>
         <md-input-container>
-            <input mdInput placeholder="Search" type="search">
+            <input mdInput placeholder="Search" type="text"  (keyup)="onChange($event)">
         </md-input-container>
         
         <section class = "sort">

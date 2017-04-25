@@ -1,13 +1,28 @@
 <section class = "contact-wrapper">
-<search-bar></search-bar>
+<section class="search-bar">   
+    <md-toolbar color="accent">
+        <md-icon svgIcon = "search"></md-icon>
+        <md-input-container>
+            <input mdInput placeholder="Search" type="text"  (keyup)="onChange($event)">
+        </md-input-container>
+        
+        <section class = "sort">
+        <button md-icon-button><md-icon svgIcon="sort_by_alpha"></md-icon></button>
+        <button md-icon-button><md-icon svgIcon="filter_list"></md-icon></button>
+        </section>
+        <section class = "chip">
+            <md-chip-list>
+                <md-chip>12</md-chip>
+            </md-chip-list>
+        </section>
+    </md-toolbar>
+</section>
 <section class="contact-list">
-<md-list>
-  <h3 md-subheader>Contact</h3>
-  <md-list-item *ngFor="let contact of contacts">
-    <md-icon md-list-icon>contact</md-icon>
-    <p md-line>{{contact.name}}</p>
-    <p md-line> {{contact.phone}} </p>
-  </md-list-item>
-</md-list>
+  <md-card *ngFor="let contact of contacts">
+    <img class="user-img" src="src/app/no-image.png" width="40" height="40">
+    <md-card-title  class = "title">{{contact.firstName}}</md-card-title>
+    <md-card-subtitle class = "subtitle">{{contact.phone}}</md-card-subtitle>
+    <md-card-subtitle  class = "subtitle">{{contact.lastName}}</md-card-subtitle>
+  </md-card>
 </section>
 </section>

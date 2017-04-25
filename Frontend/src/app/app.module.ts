@@ -16,6 +16,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { BtnSvgComponent } from './btn-svg/btn-svg.component'
 import { AppComponent } from './app.component'
 import { FormComponent } from './form/form.component'
+import { AppService } from './app.service'
 import 'hammerjs'
 
 @NgModule({
@@ -40,12 +41,11 @@ import 'hammerjs'
     MdInputModule,
     MdCardModule,
     MdTabsModule,
-    MdCardModule,
     MdChipsModule,
     //URLSearchParams,
     BrowserAnimationsModule
   ],
-  providers: [],
+  providers: [AppService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
