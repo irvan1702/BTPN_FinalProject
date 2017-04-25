@@ -1,0 +1,23 @@
+/*.navigation-wrapper{
+    box-sizing: border-box;
+    position: absolute;
+    padding: 1px 0px 0px 0px;
+}*/
+.iconNav{
+    color:cornflowerblue;
+}
+.navigation {
+    box-sizing: border-box;
+    position: absolute;
+    height: 50px;
+    top: 0px;   
+    left: 0px;
+    padding: 1px 0px 0px 2px;
+    background-color: #34a0ed;
+    float:left;
+    width:70%;
+}
+
+.nav-bar-icon {
+    padding: 5px 0px 0px 0px;
+}

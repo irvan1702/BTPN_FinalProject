@@ -6,16 +6,6 @@ import { Component, OnInit } from '@angular/core';
 })
 
 export class ContactListComponent implements OnInit {
-	contacts = [
-		{
-			name:'Bro',
-			phone:'2456135'
-		},
-		{
-			name:'Bro2',
-			phone:'24561352'
-		}
-	]
 
 	ngOnInit() { }
 }
