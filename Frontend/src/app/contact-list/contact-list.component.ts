@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { AppService } from 'app/app.service'
+import { AppService } from 'app/app.service';
+import { MdDialog } from '@angular/material';
+import { FilterComponent } from 'app/filter/filter.component'
 
 @Component({
 	selector: 'contact-list',
@@ -14,7 +16,7 @@ show;
 name;
 id;
 contacts;
-	constructor(private service:AppService) {
+	constructor(private service:AppService,public dialog: MdDialog) {
    
   }
 
@@ -25,6 +27,10 @@ contacts;
 	  console.log(this.contacts);
     });
 	 }
+
+   openDialog() {
+    this.dialog.open(FilterComponent);
+  }
 
 	 onChange(event) {
     this.name = event.target.value;
@@ -60,3 +66,9 @@ contacts;
       });
   }
 }
+
+// @Component({
+//   selector: 'dialog-overview-example-dialog',
+//   templateUrl: './test.html',
+// })
+// export class DialogOverviewExampleDialog {}

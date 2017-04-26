@@ -35,7 +35,7 @@ public class EmployeeController {
 	@Autowired
 	private ObjectMapper mapper;
 	
-	@PostMapping(value="/add")
+	@PostMapping("/add")
 	@ResponseBody
 	public void addEmployee(@RequestBody String jsonObj)
 	{
@@ -50,19 +50,27 @@ public class EmployeeController {
 		}
 	}
 	@CrossOrigin(origins = "http://localhost:4200")
-	@GetMapping(value="/findByName")
+	@GetMapping("/findByName")
 	@ResponseBody
 	public List<Employee> findByName(@RequestParam() String name)
 	{
 		return this.repository.findByLastNameContainingOrFirstNameContainingAllIgnoreCase(name, name);
 	}
 	
-	@GetMapping(value="/delete/{id}")
-	public void delete(@PathVariable Integer id){
-		this.repository.delete(id);
+	@GetMapping("/filter")
+	@CrossOrigin(origins = "http://localhost:4200")
+	@ResponseBody
+	public Iterable<Employee> filterEmployee(@RequestParam() String gender, String location)
+	{
+		if(!gender.isEmpty()&&location.isEmpty()){
+			return this.repository.findByGenderAllIgnoreCase(gender);
+		}
+		return this.repository.findByLocationAndGender(location, gender);
+
 	}
 	
-	@GetMapping(value = "/getAll")
+	
+	@GetMapping("/getAll")
 	@CrossOrigin(origins = "http://localhost:4200")
 	@ResponseBody
 	public Iterable<Employee> getAllEmployee()
@@ -90,6 +98,7 @@ public class EmployeeController {
 	public void deleteEmployeeById(@PathVariable Integer id) {
 		this.repository.delete(id);
 	}
+	
 	@CrossOrigin(origins = "http://localhost:4200")
 	@GetMapping("/getById/{id}")
 	public Employee getEmployeeById(@PathVariable Integer id) {

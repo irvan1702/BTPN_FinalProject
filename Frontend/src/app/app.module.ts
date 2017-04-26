@@ -6,11 +6,12 @@ import { MdChipsModule, MdIconModule,MdButtonModule,MdToolbarModule,MdInputModul
   MdSelectModule,MdCardModule,MdTabsModule, MdDialogModule } from '@angular/material'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 //import { URLSearchParams } from '@angular/http'
-import { ContactListComponent } from './contact-list/contact-list.component'
+import { ContactListComponent} from './contact-list/contact-list.component'
 import { ContactDetailComponent } from './contact-detail/contact-detail.component'
 import { EmployeeComponent } from './employee/employee.component' 
 import { SearchBarComponent } from './search-bar/search-bar.component' 
 import { NavigationComponent } from './navigation/navigation.component' 
+import { FilterComponent } from './filter/filter.component'
 import { ReactiveFormsModule } from '@angular/forms';
 
 import { BtnSvgComponent } from './btn-svg/btn-svg.component'
@@ -28,8 +29,10 @@ import 'hammerjs'
     SearchBarComponent,
     BtnSvgComponent,
     NavigationComponent,
-    FormComponent
+    FormComponent,
+    FilterComponent
   ],
+  entryComponents: [FilterComponent],
   imports: [
     BrowserModule,
     FormsModule,
