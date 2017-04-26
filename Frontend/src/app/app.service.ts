@@ -27,4 +27,19 @@ export class AppService{
         return response.json();
       });
     }
+
+    getContactById(id){
+        return this.http.get('http://localhost:8080/employee/getById/'+id)
+      .map(response => {
+        return response.json();
+      });
+    }
+
+    delete(id){
+        return this.http.delete('http://localhost:8080/employee/delete/' + id)
+      .map(response => {
+        return response.json();
+      });
+        
+    }
 }

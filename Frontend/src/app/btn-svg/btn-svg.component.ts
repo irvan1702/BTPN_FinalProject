@@ -12,6 +12,9 @@ export class BtnSvgComponent {
     iconRegistry.addSvgIcon(
       'add',
       sanitizer.bypassSecurityTrustResourceUrl('src/btn-svg/add.svg'));
+      iconRegistry.addSvgIcon(
+      'delete',
+      sanitizer.bypassSecurityTrustResourceUrl('src/btn-svg/delete.svg'));
     iconRegistry.addSvgIcon(
       'menu',
       sanitizer.bypassSecurityTrustResourceUrl('src/btn-svg/menu.svg'));

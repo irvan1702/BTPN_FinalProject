@@ -1,3 +1,10 @@
-.form {
-
+.contact-form {
+    padding-top: 10px;
+    height:50%;
+}
+.button-group{
+    float:right;
+}
+.input-style{
+    width:90%;
 }

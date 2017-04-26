@@ -12,6 +12,7 @@ export class ContactListComponent implements OnInit {
 employees;
 show;
 name;
+id;
 contacts;
 	constructor(private service:AppService) {
    
@@ -28,6 +29,23 @@ contacts;
 	 onChange(event) {
     this.name = event.target.value;
     this.getEmployees(this.name);
+  }
+  onClick(contact){
+    console.log(contact);
+    this.service.getContactById(contact.empId)
+    .subscribe(contacts => this.contacts=contact);
+  }
+  delete(){
+    this.service.delete(50)
+      .subscribe(contacts => {
+        this.service.getAll().subscribe(data => {
+        this.contacts = data;
+      });
+      console.log(this.contacts);
+
+      
+	  //console.log(this.contacts);
+    });
   }
 	 
 	 getEmployees(name) {

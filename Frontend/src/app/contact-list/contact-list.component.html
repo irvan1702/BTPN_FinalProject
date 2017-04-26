@@ -18,11 +18,14 @@
     </md-toolbar>
 </section>
 <section class="contact-list">
-  <md-card *ngFor="let contact of contacts">
+  <md-card *ngFor="let contact of contacts" (click) = "onClick(contact.empId)">
     <img class="user-img" src="src/app/no-image.png" width="40" height="40">
     <md-card-title  class = "title">{{contact.firstName}}</md-card-title>
     <md-card-subtitle class = "subtitle">{{contact.phone}}</md-card-subtitle>
-    <md-card-subtitle  class = "subtitle">{{contact.lastName}}</md-card-subtitle>
+    <md-card-subtitle class = "subtitle">{{contact.empId}}</md-card-subtitle>
+    <md-card-subtitle  class = "subtitle">{{contact.location.city}}</md-card-subtitle>
+    <button md-icon-button><md-icon svgIcon="delete" (click)="delete()"></md-icon></button>
   </md-card>
+  <button md-fab><md-icon svgIcon="add"></md-icon></button>
 </section>
 </section>

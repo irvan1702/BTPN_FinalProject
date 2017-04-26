@@ -41,6 +41,7 @@ public class EmployeeController {
 	{
 		mapper.setDateFormat(new SimpleDateFormat("yyyy/MM/dd"));
 		Employee e;
+		System.out.println(jsonObj);
 		try {
 			e = mapper.readValue(jsonObj, Employee.class);
 			this.repository.save(e);
@@ -53,7 +54,7 @@ public class EmployeeController {
 	@ResponseBody
 	public List<Employee> findByName(@RequestParam() String name)
 	{
-		return this.repository.findByLastNameOrFirstName(name, name);
+		return this.repository.findByLastNameContainingOrFirstNameContainingAllIgnoreCase(name, name);
 	}
 	
 	@GetMapping(value="/delete/{id}")
@@ -70,6 +71,7 @@ public class EmployeeController {
 		return this.repository.findAll(new Sort(sorting));
 
 	}
+	
 	@RequestMapping(method = {RequestMethod.PUT, RequestMethod.PATCH}, value="/{employeeId}")
 	public void update(@PathVariable Integer employeeId, @RequestBody Employee emp) {
 		Employee entity = this.repository.findOne(employeeId);
@@ -81,6 +83,17 @@ public class EmployeeController {
 			this.repository.save(entity);
 		}
 		
+	}
+	
+	@CrossOrigin(origins = "http://localhost:4200")
+	@DeleteMapping("/delete/{id}")
+	public void deleteEmployeeById(@PathVariable Integer id) {
+		this.repository.delete(id);
+	}
+	@CrossOrigin(origins = "http://localhost:4200")
+	@GetMapping("/getById/{id}")
+	public Employee getEmployeeById(@PathVariable Integer id) {
+		return this.repository.findOne(id);
 	}
 
 }
