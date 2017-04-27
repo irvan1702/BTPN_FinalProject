@@ -10,11 +10,11 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.data.rest.core.annotation.RestResource;
 
 
-public interface EmployeeRepository extends PagingAndSortingRepository<Employee, Integer> {
+public interface EmployeeRepository extends PagingAndSortingRepository<Employee, Long> {
 
 		public List<Employee> findByLastNameContainingOrFirstNameContainingAllIgnoreCase(@Param("last_name")String lastName,@Param("first_name")String firstName);
 		public Iterable<Employee> findByLocation(@Param("location") String location);
 		public Iterable<Employee> findByGenderAllIgnoreCase(@Param("gender") String gender);
-		public Iterable<Employee> findByLocationAndGender(@Param("location") String location, @Param("gender") String gender);
+		public Iterable<Employee> findByLocationAndGender(@Param("location") Location location, @Param("gender") String gender);
 	
 }

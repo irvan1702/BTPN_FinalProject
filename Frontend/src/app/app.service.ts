@@ -42,4 +42,10 @@ export class AppService{
       });
         
     }
+    getLocations(){
+      return this.http.get('http://localhost:8080/locations/all').
+      map(response => {
+        return response.json();
+      });
+    }
 }

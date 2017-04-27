@@ -16,19 +16,9 @@ import javax.persistence.Table;
 @Table(name = "Employee")
 public class Employee {
 	@Id
-	@GeneratedValue(
-		strategy = GenerationType.SEQUENCE,
-		generator = "employee_seq"
-	)
-	@SequenceGenerator(
-		name = "employee_seq",
-		sequenceName = "employee_seq"
-	)
-	@Column(
-		name = "employee_id",
-		nullable = false
-	)
-	private Integer empId;
+	@Column(name="emp_id")
+	@GeneratedValue(strategy= GenerationType.AUTO)
+	private Long empId;
 	@Column(name = "first_name", nullable = false)
 	private String firstName;
 	@Column(name = "last_name", nullable = false)
@@ -69,7 +59,7 @@ public class Employee {
 		
 	}
 
-	public Employee(Integer empId, String firstName, String lastName, String gender, Date dateOfBirth,
+	public Employee(Long empId, String firstName, String lastName, String gender, Date dateOfBirth,
 			String nationality, String maritalStatus, String phone, String subDivision, String status, Date suspendDate,
 			Date hiredDate, String grade, String division, String email, String photo, Location location) {
 		super();
@@ -92,11 +82,11 @@ public class Employee {
 		this.location = location;
 	}
 
-	public Integer getEmpId() {
+	public Long getEmpId() {
 		return empId;
 	}
 
-	public void setEmpId(Integer empId) {
+	public void setEmpId(Long empId) {
 		this.empId = empId;
 	}
 

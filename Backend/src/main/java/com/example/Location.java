@@ -14,29 +14,17 @@ import javax.validation.constraints.NotNull;
 public class Location {
 
 	@Id
-	@GeneratedValue(
-		strategy = GenerationType.SEQUENCE,
-		generator = "location_seq"
-	)
-	@SequenceGenerator(
-		name = "location_seq",
-		sequenceName = "location_seq"
-	)
-	@Column(
-			name = "id",
-			nullable = false
-		)
-	private Integer id;
+	@GeneratedValue(strategy=GenerationType.AUTO)
+	private Long id;
 	
-	@NotNull
 	@Column(nullable = false)
 	private String city;
 	
-	public Integer getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
