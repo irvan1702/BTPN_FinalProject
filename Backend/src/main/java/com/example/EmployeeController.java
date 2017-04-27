@@ -36,6 +36,7 @@ public class EmployeeController {
 	private ObjectMapper mapper;
 	
 	@PostMapping("/add")
+	@CrossOrigin(origins = "http://localhost:4200")
 	@ResponseBody
 	public void addEmployee(@RequestBody String jsonObj)
 	{
