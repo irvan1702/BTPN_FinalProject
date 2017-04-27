@@ -1,10 +1,10 @@
-<form class="contact-form">
+<form class="contact-form" [formGroup]=contactform>
     <table>
         <tr>
             <td>
                 <md-input-container class = "input-style">
                     <label>First Name</label>
-                    <input mdInput>
+                    <input mdInput formControlName="firstName">
                 </md-input-container>
             </td>
             <td>

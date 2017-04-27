@@ -20,6 +20,8 @@ import { AppComponent } from './app.component'
 import { FormComponent } from './form/form.component'
 import { AppService } from './app.service'
 import { lookupListToken, lookupLists } from './provides';
+import { Routing} from './app.routing'
+import { RefreshService } from './refresh.service'
 import 'hammerjs'
 
 @NgModule({
@@ -49,10 +51,11 @@ import 'hammerjs'
     MdTabsModule,
     MdChipsModule,
     MdSelectModule,
+    Routing,
     //URLSearchParams,
     BrowserAnimationsModule
   ],
-  providers: [AppService,
+  providers: [AppService,RefreshService,
     {
       provide: lookupListToken, useValue: lookupLists
     }],

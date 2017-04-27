@@ -64,6 +64,10 @@ export class ContactListComponent implements OnInit {
 
   }
   
+  addContact(){
+    
+  }
+
   onChange(event) {
     this.name = event.target.value;
     this.getEmployees(this.name);

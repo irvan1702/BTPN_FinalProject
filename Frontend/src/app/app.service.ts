@@ -49,11 +49,11 @@ export class AppService{
       });
     }
 
-    addEmployee(){
-      return this.http.post('http://localhost:8080/employee/add').
-      map(response => {
-        return response.json();
-      });
-    }
+    // addEmployee(){
+    //   return this.http.post('http://localhost:8080/employee/add').
+    //   map(response => {
+    //     return response.json();
+    //   });
+    // }
     
 }
