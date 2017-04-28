@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import {
   MdChipsModule,MdCheckboxModule, MdIconModule, MdButtonModule, MdToolbarModule, MdInputModule,
-  MdSelectModule, MdCardModule, MdTabsModule, MdDialogModule
+  MdSelectModule,MdRadioModule, MdCardModule, MdTabsModule, MdDialogModule
 } from '@angular/material'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 //import { URLSearchParams } from '@angular/http'
@@ -48,6 +48,7 @@ import 'hammerjs'
     MdCardModule,
     MdTabsModule,
     MdChipsModule,
+    MdRadioModule,
     MdSelectModule,
     Routing,
     //URLSearchParams,

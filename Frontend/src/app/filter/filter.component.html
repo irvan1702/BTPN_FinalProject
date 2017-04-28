@@ -2,15 +2,19 @@
 <section md-dialog-content>
     <h2 md-dialog-title>Gender</h2>
     <section>
-        <md-checkbox [(ngModel)]="genderMaleChecked" (click)="maleFilter($event)" [value]="male">Male
-        </md-checkbox>
-        <md-checkbox [(ngModel)]="genderFemaleChecked" (click)="femaleFilter()" [value]="female">Female
-        </md-checkbox>
+        <md-radio-group [(ngModel)]="genderValue">
+            <md-radio-button value="Male">Male</md-radio-button>
+            <md-radio-button value="Female">Female</md-radio-button>
+        </md-radio-group>
     </section>
 </section>
 <section md-dialog-content>
     <h2 md-dialog-title>Location</h2>
-    <md-checkbox *ngFor="let location of locations" [value]="location.locationCity">{{location.locationCity}}</md-checkbox>
+    <section>
+        <md-radio-group [(ngModel)]="locationValue">
+            <md-radio-button *ngFor="let location of locations" [value]="location.city">{{location.city}}</md-radio-button>
+        </md-radio-group>
+    </section>
 </section>
 <div md-dialog-actions>
     <button md-button (click)="doFilter()">Filter</button>

@@ -16,21 +16,36 @@ export class ContactListComponent implements OnInit {
   name;
   id;
   contacts;
+  contact;
+  deleteHidden = false;
   sort = "asc";
+
   private subscription: Subscription;
-  constructor(private service: AppService, public dialog: MdDialog, 
-  private refreshService: RefreshService) {
+  constructor(private service: AppService, public dialog: MdDialog,
+    private refreshService: RefreshService) {
 
   }
-
 
   ngOnInit() {
     this.service.getAll()
       .subscribe(data => {
         this.contacts = data
       });
+    this.subscription = this.refreshService.notifyObservable$.subscribe((res) => {
+      if (res.hasOwnProperty('option') && res.option === 'refresh') {
+        this.contacts = res.value;
+      }
+      else if (res.hasOwnProperty('option') && res.option === 'add') {
+        this.service.getAll()
+          .subscribe(data => {
+            this.contacts = data
+          });
+      }
+
+
+    });
   }
-  
+
 
   openDialog() {
     let dialogRef = this.dialog.open(FilterComponent, {
@@ -65,29 +80,35 @@ export class ContactListComponent implements OnInit {
       this.sort = "asc";
     }
     this.service.sortingEmployee(this.sort)
-      .subscribe(result =>{
+      .subscribe(result => {
         this.contacts = result;
       });
   }
 
-  addEmployee() {
-
+  addContact() {
+    this.refreshService.notifyOther({ option: 'reset', value: "" });
   }
   onChange(event) {
     this.name = event.target.value;
     this.getEmployees(this.name);
   }
-  onClick(contact) {
-    console.log(contact);
-    this.service.getContactById(contact.empId)
-      .subscribe(contacts => this.contacts = contact);
+  onClick(empId) {
+    this.service.getContactById(empId)
+      .subscribe(contacts => {
+        this.contact = contacts
+        console.log(this.contact);
+      });
+    this.deleteHidden = true;
   }
+
   delete(id) {
     this.service.delete(id)
-      .subscribe(contacts => {
-        this.service.getAll().subscribe(data => {
-          this.contacts = data;
-        });
+      .subscribe(id => {
+        this.service.getAll().
+          subscribe(data => {
+            this.contacts = data;
+            this.deleteHidden = false;
+          });
       });
   }
 

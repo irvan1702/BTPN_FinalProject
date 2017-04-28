@@ -2,35 +2,53 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { lookupListToken } from 'app/provides'
 import { AppService } from 'app/app.service'
 import { MdDialogRef } from '@angular/material';
+import { RefreshService } from 'app/refresh.service'
 @Component({
 	selector: 'filter',
 	templateUrl: 'filter.component.html'
 })
 
 export class FilterComponent implements OnInit {
-	genderMaleChecked; //false => disabled; true => enabled
-    genderFemaleChecked; // false => disabled; true => enabled
-    gender = "";
-    tempGender = "";
-    location = "";
-    tempLocation = "";
-	checked=false;
-    constructor(public dialogRef: MdDialogRef<FilterComponent>,
-        private locationService: AppService,
-        @Inject(lookupListToken) public lookupLists) { }
+	genderValue;
+    locationValue;
     locations;
 
+    constructor(public dialogRef: MdDialogRef<FilterComponent>,
+        private service: AppService,private refreshService:RefreshService,
+        @Inject(lookupListToken) public lookupLists) { }
+
     ngOnInit() {
-        this.locationService.getAll()
-            .subscribe(locations => {
-                this.locations = locations;
+        this.service.getLocations()
+            .subscribe(data => {
+                this.locations = data;
+                console.log(this.locations);
             });
+            
     }
 
-	maleFilter(event){
-		this.genderMaleChecked=event.value;
-	}
 	doFilter(){
-		this.dialogRef.close
+        if(this.genderValue===undefined && this.locationValue===undefined){
+            this.dialogRef.close;
+        }
+        else if(this.genderValue!==undefined && this.locationValue===undefined){
+            this.dialogRef.close;
+            this.service.filterByGender(this.genderValue).subscribe(data=>{
+                this.refreshService.notifyOther({ option: 'refresh', value: data });
+            });
+        }
+        else if(this.genderValue===undefined && this.locationValue!==undefined){
+            this.dialogRef.close;
+            this.service.filterByLocation(this.locationValue).subscribe(data=>{
+                this.refreshService.notifyOther({ option: 'refresh', value: data });
+            });
+        }
+        else{
+             this.dialogRef.close;
+            this.service.filterByLocationAndGender(this.locationValue,this.genderValue).subscribe(data=>{
+                this.refreshService.notifyOther({ option: 'refresh', value: data });
+            });
+        }
+        
 	}
+    
 }

@@ -1,4 +1,4 @@
-<form class="contact-form" [formGroup]="contactForm">
+<form class="contact-form" [formGroup]="contactForm" (ngSubmit)="onSubmit(contactForm.value)">
     <table>
         <tr>
             <td>
@@ -97,10 +97,16 @@
                     <input mdInput formControlName="email">
                 </md-input-container>
             </td>
+            <td>
+                <md-input-container class = "input-style">
+                    <label>Location</label>
+                    <input mdInput formControlName="location">
+                </md-input-container>
+            </td>
         </tr>
     </table>
     <section class = "button-group">
         <button md-raised-button>Exit</button>
-        <button md-raised-button>Save</button>
+        <button md-raised-button type="submit">Save</button>
     </section>
 </form>

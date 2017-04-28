@@ -1,6 +1,7 @@
 package com.example;
 
 import java.io.IOException;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -31,7 +32,8 @@ public class EmployeeController {
 
 	@Autowired
 	private EmployeeRepository repository;
-	
+	@Autowired
+	private LocationRepository locRepository;
 	@Autowired
 	private ObjectMapper mapper;
 	
@@ -45,11 +47,14 @@ public class EmployeeController {
 		System.out.println(jsonObj);
 		try {
 			e = mapper.readValue(jsonObj, Employee.class);
+			Location loc = locRepository.findByCityAllIgnoreCase(e.getLocation().getCity());
+			e.setLocation(loc);
 			this.repository.save(e);
 		} catch (IOException e1) {
 			e1.printStackTrace();
 		}
 	}
+	
 	@CrossOrigin(origins = "http://localhost:4200")
 	@GetMapping("/findByName")
 	@ResponseBody
@@ -58,16 +63,30 @@ public class EmployeeController {
 		return this.repository.findByLastNameContainingOrFirstNameContainingAllIgnoreCase(name, name);
 	}
 	
-	@GetMapping("/filter")
+	@GetMapping("/filterGender")
 	@CrossOrigin(origins = "http://localhost:4200")
 	@ResponseBody
-	public Iterable<Employee> filterEmployee(@RequestParam() String gender, Location location)
+	public Iterable<Employee> filterEmployeeByGender(@RequestParam() String gender)
 	{
-		if(!gender.isEmpty()&&location.getCity().isEmpty()){
 			return this.repository.findByGenderAllIgnoreCase(gender);
-		}
-		return this.repository.findByLocationAndGender(location, gender);
-
+	}
+	
+	@GetMapping("/filterLocation")
+	@CrossOrigin(origins = "http://localhost:4200")
+	@ResponseBody
+	public Iterable<Employee> filterEmployeeByLocation(@RequestParam() String location)
+	{
+			return this.repository.findByLocationCityAllIgnoreCase(location);
+	}
+	@GetMapping("/filterLocationAndGender")
+	@CrossOrigin(origins = "http://localhost:4200")
+	@ResponseBody
+	public Iterable<Employee> filterEmployeeByLocationAndGender(@RequestParam() String location, 
+			@RequestParam() String gender)
+	{
+		System.out.println(location);
+		System.out.println(gender);
+			return this.repository.findByLocationCityAndGenderAllIgnoreCase(location, gender);
 	}
 	
 	
@@ -76,12 +95,12 @@ public class EmployeeController {
 	@ResponseBody
 	public Iterable<Employee> getAllEmployee()
 	{
-		Sort.Order sorting = new Sort.Order(Sort.Direction.ASC, "firstName").ignoreCase();
+		Sort.Order sorting = new Sort.Order(Sort.Direction.ASC, "lastName").ignoreCase();
 		return this.repository.findAll(new Sort(sorting));
 
 	}
 	
-	@RequestMapping(method = {RequestMethod.PUT, RequestMethod.PATCH}, value="/{employeeId}")
+	@RequestMapping(method = {RequestMethod.PUT, RequestMethod.PATCH}, value="/update/{employeeId}")
 	public void update(@PathVariable Long employeeId, @RequestBody Employee emp) {
 		Employee entity = this.repository.findOne(employeeId);
 		if (entity == null) {
@@ -89,6 +108,15 @@ public class EmployeeController {
 		}
 		else{
 			entity = emp;
+			entity.setEmpId(employeeId);
+			try {
+				entity.setDateOfBirth(new SimpleDateFormat("yyyy/MM/dd").parse(emp.getDateOfBirth().toString()));
+				entity.setSuspendDate(new SimpleDateFormat("yyyy/MM/dd").parse(emp.getSuspendDate().toString()));
+				entity.setHiredDate(new SimpleDateFormat("yyyy/MM/dd").parse(emp.getHiredDate().toString()));
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			this.repository.save(entity);
 		}
 		
@@ -96,8 +124,9 @@ public class EmployeeController {
 	
 	@CrossOrigin(origins = "http://localhost:4200")
 	@DeleteMapping("/delete/{id}")
-	public void deleteEmployeeById(@PathVariable Long id) {
+	public Long deleteEmployeeById(@PathVariable Long id) {
 		this.repository.delete(id);
+		return id;
 	}
 	
 	@CrossOrigin(origins = "http://localhost:4200")
