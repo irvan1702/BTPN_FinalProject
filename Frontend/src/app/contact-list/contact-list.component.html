@@ -7,7 +7,7 @@
         </md-input-container>
         
         <section class = "sort">
-        <button md-icon-button><md-icon svgIcon="sort_by_alpha" (click)="sorting()"></md-icon></button>
+        <button md-icon-button (click)="sorting()"><md-icon svgIcon="sort_by_alpha" ></md-icon></button>
         <button md-icon-button (click)="openDialog()"><md-icon svgIcon="filter_list"></md-icon></button>
         </section>
         <section class = "chip">
@@ -20,11 +20,10 @@
 <section class="contact-list">
   <md-card *ngFor="let contact of contacts" (click) = "onClick(contact.empId)">
     <img class="user-img" src="src/app/no-image.png" width="40" height="40">
-    <md-card-title  class = "title">{{contact.firstName}}</md-card-title>
-    <md-card-subtitle class = "subtitle">{{contact.phone}}</md-card-subtitle>
-    <md-card-subtitle class = "subtitle">{{contact.empId}}</md-card-subtitle>
-    <md-card-subtitle  class = "subtitle">{{contact.location.city}}</md-card-subtitle>
-    <button md-icon-button><md-icon svgIcon="delete" (click)="delete()"></md-icon></button>
+    <md-card-title  class = "title">{{contact.firstName}} {{contact.lastName}}</md-card-title>
+    <md-card-subtitle class = "subtitle">{{contact.grade}} {{contact.division}} </md-card-subtitle>
+    <md-card-subtitle class = "subtitle">{{contact.location.city}} {{contact.phone}}</md-card-subtitle>
+    <button md-icon-button (click)="delete(contact.empId)"><md-icon svgIcon="delete" ></md-icon></button>
   </md-card>
   <button md-fab><md-icon svgIcon="add" (click)="addContact()"></md-icon></button>
 </section>

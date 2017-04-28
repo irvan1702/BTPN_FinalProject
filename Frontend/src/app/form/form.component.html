@@ -1,4 +1,4 @@
-<form class="contact-form" [formGroup]=contactform>
+<form class="contact-form" [formGroup]="contactForm">
     <table>
         <tr>
             <td>
@@ -10,7 +10,7 @@
             <td>
                 <md-input-container class = "input-style">
                     <label>Sub Division</label>
-                    <input mdInput>
+                    <input mdInput formControlName="subDivision">
                 </md-input-container>
             </td>
         </tr>
@@ -18,13 +18,13 @@
             <td>
                 <md-input-container class = "input-style">
                     <label>Last Name</label>
-                    <input mdInput>
+                    <input mdInput formControlName="lastName">
                 </md-input-container>
             </td>
             <td>
                 <md-input-container class = "input-style">
                     <label>Status</label>
-                    <input mdInput>
+                    <input mdInput formControlName="status">
                 </md-input-container>
             </td>
         </tr>
@@ -32,13 +32,13 @@
             <td>
                 <md-input-container class = "input-style">
                     <label>Gender</label>
-                    <input mdInput>
+                    <input mdInput formControlName="gender">
                 </md-input-container>
             </td>
             <td>
                 <md-input-container class = "input-style">
                     <label>Suspend Date</label>
-                    <input mdInput>
+                    <input mdInput formControlName="suspendDate">
                 </md-input-container>
             </td>
         </tr>
@@ -46,13 +46,13 @@
             <td>
                 <md-input-container class = "input-style">
                     <label>Date of Birth</label>
-                    <input mdInput>
+                    <input mdInput formControlName="dateOfBirth">
                 </md-input-container>
             </td>
             <td>
                 <md-input-container class = "input-style">
                     <label>Hired Date</label>
-                    <input mdInput>
+                    <input mdInput formControlName="hiredDate"> 
                 </md-input-container>
             </td>
         </tr>
@@ -60,13 +60,13 @@
             <td>
                 <md-input-container class = "input-style">
                     <label>Nationality</label>
-                    <input mdInput>
+                    <input mdInput formControlName="nationality">
                 </md-input-container>
             </td>
             <td>
                 <md-input-container class = "input-style">
                     <label>Grade</label>
-                    <input mdInput>
+                    <input mdInput formControlName="grade">
                 </md-input-container>
             </td>
         </tr>
@@ -74,13 +74,13 @@
             <td>
                 <md-input-container class = "input-style">
                     <label>Marital</label>
-                    <input mdInput>
+                    <input mdInput formControlName="maritalStatus">
                 </md-input-container>
             </td>
             <td>
                 <md-input-container class = "input-style">
                     <label>Divison</label>
-                    <input mdInput>
+                    <input mdInput formControlName="division">
                 </md-input-container>
             </td>
         </tr>
@@ -88,13 +88,13 @@
             <td>
                 <md-input-container class = "input-style">
                     <label>Phone</label>
-                    <input mdInput>
+                    <input mdInput formControlName="phone">
                 </md-input-container>
             </td>
             <td>
                 <md-input-container class = "input-style">
                     <label>Email</label>
-                    <input mdInput>
+                    <input mdInput formControlName="email">
                 </md-input-container>
             </td>
         </tr>

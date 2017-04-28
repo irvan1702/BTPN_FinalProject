@@ -20,7 +20,7 @@ export class FormComponent implements OnInit {
       firstName: this.formBuilder.control(''),
       lastName: this.formBuilder.control(''),
       gender: this.formBuilder.control(''),
-      dob: this.formBuilder.control(''),
+      dateOfBirth: this.formBuilder.control(''),
       nationality: this.formBuilder.control(''),
       maritalStatus: this.formBuilder.control(''),
       phone: this.formBuilder.control(''),

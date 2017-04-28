@@ -49,6 +49,14 @@ export class AppService{
       });
     }
 
+    sortingEmployee(sort){
+      return this.http.get('http://localhost:8080/employee/sortBy/'+ sort).
+      map(response => {
+        return response.json();
+        
+      });
+    }
+
     // addEmployee(){
     //   return this.http.post('http://localhost:8080/employee/add').
     //   map(response => {

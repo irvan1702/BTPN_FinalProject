@@ -105,5 +105,21 @@ public class EmployeeController {
 	public Employee getEmployeeById(@PathVariable Long id) {
 		return this.repository.findOne(id);
 	}
+	
+	@CrossOrigin(origins = "http://localhost:4200")
+	@GetMapping("/sortBy/{sort}")
+	public  Iterable<Employee> sortingEmployee(@PathVariable String sort) {
+		if(sort.equalsIgnoreCase("asc")){
+			Sort.Order sorting = new Sort.Order(Sort.Direction.ASC, "lastName").ignoreCase();
+			return this.repository.findAll(new Sort(sorting));
+		}
+		else if(sort.equalsIgnoreCase("desc")){
+			Sort.Order sorting = new Sort.Order(Sort.Direction.DESC, "lastName").ignoreCase();
+			return this.repository.findAll(new Sort(sorting));
+		}
+		
+		return this.repository.findAll();
+		
+	}
 
 }

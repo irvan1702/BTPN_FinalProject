@@ -10,7 +10,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 //import { URLSearchParams } from '@angular/http'
 import { ContactListComponent } from './contact-list/contact-list.component'
 import { ContactDetailComponent } from './contact-detail/contact-detail.component'
-import { EmployeeComponent } from './employee/employee.component'
 import { NavigationComponent } from './navigation/navigation.component'
 import { FilterComponent } from './filter/filter.component'
 import { ReactiveFormsModule } from '@angular/forms';
@@ -29,7 +28,6 @@ import 'hammerjs'
     AppComponent,
     ContactListComponent,
     ContactDetailComponent,
-    EmployeeComponent,
     BtnSvgComponent,
     NavigationComponent,
     FormComponent,
