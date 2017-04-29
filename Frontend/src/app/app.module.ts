@@ -14,6 +14,7 @@ import { NavigationComponent } from './navigation/navigation.component'
 import { FilterComponent } from './filter/filter.component'
 import { DeleteComponent } from './delete/delete.component'
 import { ReactiveFormsModule } from '@angular/forms';
+import { DatePipe } from '@angular/common';
 
 import { BtnSvgComponent } from './btn-svg/btn-svg.component'
 import { AppComponent } from './app.component'
@@ -53,10 +54,11 @@ import 'hammerjs'
     MdRadioModule,
     MdSelectModule,
     Routing,
+    
     //URLSearchParams,
     BrowserAnimationsModule
   ],
-  providers: [AppService,RefreshService,
+  providers: [AppService,RefreshService,DatePipe,
     {
       provide: lookupListToken, useValue: lookupLists
     }],

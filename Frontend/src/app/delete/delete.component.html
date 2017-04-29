@@ -1,6 +1,6 @@
 <h1 md-dialog-title>Are you sure want to delete the contact?</h1>
 <section md-dialog-content>
 <div md-dialog-actions>
-    <button md-button (click)="doDelete()">Delete</button>
-    <button md-button (click)="dialogRef.close({action:'cancel'})">Cancel</button>
+    <button md-button (click)="dialogRef.close('delete')">Delete</button>
+    <button md-button (click)="dialogRef.close('cancel')">Cancel</button>
 </div>

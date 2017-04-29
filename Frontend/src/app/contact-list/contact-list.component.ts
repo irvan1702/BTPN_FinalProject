@@ -15,12 +15,11 @@ import { RefreshService } from 'app/refresh.service';
 export class ContactListComponent implements OnInit {
 
   name;
-  id;
   contacts;
   contact;
   deleteHidden = false;
   sort = "asc";
-
+  idContact;
   private subscription: Subscription;
   constructor(private service: AppService, public dialog: MdDialog,
     private refreshService: RefreshService) {
@@ -60,6 +59,14 @@ export class ContactListComponent implements OnInit {
       height: '400px',
       width: '600px',
     });
+
+    dialogRef.afterClosed().subscribe(data =>{
+      if(data=='delete'){
+        this.delete(this.idContact);
+      }
+    })
+
+    //this.refreshService.notifyOther({option:"deleteId", value:this.idContact});
   }
 
   sorting() {
@@ -78,12 +85,14 @@ export class ContactListComponent implements OnInit {
   addContact() {
     this.refreshService.notifyOther({ option: 'reset', value: "" });
   }
-  
+
   onChange(event) {
     this.name = event.target.value;
     this.getEmployees(this.name);
   }
+
   onClick(empId) {
+    this.idContact=empId;
     this.service.getContactById(empId)
       .subscribe(data => {
         this.contact = data
