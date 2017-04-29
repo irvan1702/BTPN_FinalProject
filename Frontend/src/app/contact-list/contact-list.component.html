@@ -8,8 +8,8 @@
         
         <section class = "sort">
         <button md-icon-button (click)="sorting()"><md-icon svgIcon="sort_by_alpha" ></md-icon></button>
-        <button md-icon-button (click)="openDialog()"><md-icon svgIcon="filter_list"></md-icon></button>
-        <button md-icon-button (click)="delete(contact.empId)" *ngIf="deleteHidden"><md-icon svgIcon="delete" ></md-icon></button>
+        <button md-icon-button (click)="openFilterDialog()"><md-icon svgIcon="filter_list"></md-icon></button>
+        <button md-icon-button (click)="openDeleteDialog()" *ngIf="deleteHidden"><md-icon svgIcon="delete" ></md-icon></button>
         </section>
         <section class = "chip">
             <md-chip-list>

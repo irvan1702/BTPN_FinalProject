@@ -93,4 +93,12 @@ filterByLocationAndGender(location,gender) {
     });
   }
 
+  updateEmployee(id,contactData){
+    contactData.location={"id":"","city":contactData.location};
+    return this.http.post('http://localhost:8080/employee/update/'+id ,contactData).
+    map(() => {
+      return "";
+    });
+  }
+
 }

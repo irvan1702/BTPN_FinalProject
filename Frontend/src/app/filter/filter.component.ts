@@ -1,5 +1,4 @@
-import { Component, OnInit, Inject } from '@angular/core';
-import { lookupListToken } from 'app/provides'
+import { Component, OnInit } from '@angular/core';
 import { AppService } from 'app/app.service'
 import { MdDialogRef } from '@angular/material';
 import { RefreshService } from 'app/refresh.service'
@@ -14,14 +13,12 @@ export class FilterComponent implements OnInit {
     locations;
 
     constructor(public dialogRef: MdDialogRef<FilterComponent>,
-        private service: AppService,private refreshService:RefreshService,
-        @Inject(lookupListToken) public lookupLists) { }
+        private service: AppService,private refreshService:RefreshService) { }
 
     ngOnInit() {
         this.service.getLocations()
             .subscribe(data => {
                 this.locations = data;
-                console.log(this.locations);
             });
             
     }

@@ -12,6 +12,7 @@ import { ContactListComponent } from './contact-list/contact-list.component'
 import { ContactDetailComponent } from './contact-detail/contact-detail.component'
 import { NavigationComponent } from './navigation/navigation.component'
 import { FilterComponent } from './filter/filter.component'
+import { DeleteComponent } from './delete/delete.component'
 import { ReactiveFormsModule } from '@angular/forms';
 
 import { BtnSvgComponent } from './btn-svg/btn-svg.component'
@@ -31,9 +32,10 @@ import 'hammerjs'
     BtnSvgComponent,
     NavigationComponent,
     FormComponent,
-    FilterComponent
+    FilterComponent,
+    DeleteComponent
   ],
-  entryComponents: [FilterComponent],
+  entryComponents: [FilterComponent,DeleteComponent],
   imports: [
     BrowserModule,
     FormsModule,

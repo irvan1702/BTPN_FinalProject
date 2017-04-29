@@ -101,25 +101,21 @@ public class EmployeeController {
 	}
 	
 	@RequestMapping(method = {RequestMethod.PUT, RequestMethod.PATCH}, value="/update/{employeeId}")
-	public void update(@PathVariable Long employeeId, @RequestBody Employee emp) {
-		Employee entity = this.repository.findOne(employeeId);
-		if (entity == null) {
-			throw new EmployeeNotFoundException();
-		}
-		else{
-			entity = emp;
-			entity.setEmpId(employeeId);
+	public void update(@PathVariable Long employeeId, @RequestBody String jsonObj) {
+		mapper.setDateFormat(new SimpleDateFormat("yyyy/MM/dd"));
+		Employee e = this.repository.findOne(employeeId);
+		System.out.println(jsonObj);
+		if(e!=null){
 			try {
-				entity.setDateOfBirth(new SimpleDateFormat("yyyy/MM/dd").parse(emp.getDateOfBirth().toString()));
-				entity.setSuspendDate(new SimpleDateFormat("yyyy/MM/dd").parse(emp.getSuspendDate().toString()));
-				entity.setHiredDate(new SimpleDateFormat("yyyy/MM/dd").parse(emp.getHiredDate().toString()));
-			} catch (ParseException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				e = mapper.readValue(jsonObj, Employee.class);
+				e.setEmpId(employeeId);
+				Location loc = locRepository.findByCityAllIgnoreCase(e.getLocation().getCity());
+				e.setLocation(loc);
+				this.repository.save(e);
+			} catch (IOException e1) {
+				e1.printStackTrace();
 			}
-			this.repository.save(entity);
 		}
-		
 	}
 	
 	@CrossOrigin(origins = "http://localhost:4200")

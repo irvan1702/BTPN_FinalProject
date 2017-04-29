@@ -41,6 +41,26 @@ export class FormComponent implements OnInit {
       if (res.hasOwnProperty('option') && res.option === 'reset') {
         this.contactForm.reset();
       }
+      else if (res.hasOwnProperty('option') && res.option === 'showToForm') {
+        let data=res.value;
+        console.log(data);
+        this.contactForm.controls['firstName'].setValue(data.firstName);
+        this.contactForm.controls['lastName'].setValue(data.lastName);
+        this.contactForm.controls['gender'].setValue(data.gender);
+        this.contactForm.controls['dateOfBirth'].setValue(data.dateOfBirth);
+        this.contactForm.controls['nationality'].setValue(data.nationality);
+        this.contactForm.controls['maritalStatus'].setValue(data.maritalStatus);
+        this.contactForm.controls['phone'].setValue(data.phone);
+        this.contactForm.controls['status'].setValue(data.status);
+        //this.contactForm.controls['suspendDate'].setValue(data.suspendDate);
+        //this.contactForm.controls['hiredDate'].setValue(data.hiredDate);
+        this.contactForm.controls['grade'].setValue(data.grade);
+        this.contactForm.controls['division'].setValue(data.division);
+        this.contactForm.controls['subDivision'].setValue(data.subDivision);
+        this.contactForm.controls['email'].setValue(data.email);
+        //this.contactForm.controls['location'].setValue(data.location);
+
+      }
     }
     )
   }

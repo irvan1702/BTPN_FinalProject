@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AppService } from 'app/app.service';
 import { MdDialog } from '@angular/material';
 import { FilterComponent } from 'app/filter/filter.component'
+import { DeleteComponent } from 'app/delete/delete.component'
 import { Subscription } from 'rxjs/Subscription';
 import { RefreshService } from 'app/refresh.service';
 
@@ -47,29 +48,18 @@ export class ContactListComponent implements OnInit {
   }
 
 
-  openDialog() {
+  openFilterDialog() {
     let dialogRef = this.dialog.open(FilterComponent, {
       height: '400px',
       width: '600px',
     });
-    // if (this.genderFilter != "") {
-    //   dialogRef.componentInstance.gender = this.genderFilter;
-    //   dialogRef.componentInstance.tempGender = this.genderFilter;
-    // }
-    // if (this.locationFilter != "") {
-    //   dialogRef.componentInstance.location = this.locationFilter;
-    //   dialogRef.componentInstance.tempLocation = this.locationFilter;
-    // }
-    // dialogRef.afterClosed().subscribe(result => {
-    //   if (result != undefined) {
-    //     if (result.action == "filter") {
-    //       this.locationFilter = result.locValue;
-    //       this.genderFilter = result.genderValue;
-    //       this.getEmployees(name);
-    //     }
-    //   }
+  }
 
-    // });
+  openDeleteDialog() {
+    let dialogRef = this.dialog.open(DeleteComponent, {
+      height: '400px',
+      width: '600px',
+    });
   }
 
   sorting() {
@@ -88,16 +78,19 @@ export class ContactListComponent implements OnInit {
   addContact() {
     this.refreshService.notifyOther({ option: 'reset', value: "" });
   }
+  
   onChange(event) {
     this.name = event.target.value;
     this.getEmployees(this.name);
   }
   onClick(empId) {
     this.service.getContactById(empId)
-      .subscribe(contacts => {
-        this.contact = contacts
+      .subscribe(data => {
+        this.contact = data
         console.log(this.contact);
+        this.refreshService.notifyOther({ option: "showToForm", value: this.contact });
       });
+
     this.deleteHidden = true;
   }
 
