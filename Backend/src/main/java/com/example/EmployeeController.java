@@ -37,22 +37,37 @@ public class EmployeeController {
 	@Autowired
 	private ObjectMapper mapper;
 	
-	@PostMapping("/add")
+//	@PostMapping("/add")
+//	@CrossOrigin(origins = "http://localhost:4200")
+//	@ResponseBody
+//	public void addEmployee(@RequestBody String jsonObj)
+//	{
+//		mapper.setDateFormat(new SimpleDateFormat("yyyy/MM/dd"));
+//		Employee e;
+//		System.out.println(jsonObj);
+//		try {
+//			e = mapper.readValue(jsonObj, Employee.class);
+//			Location loc = locRepository.findByCityAllIgnoreCase(e.getLocation().getCity());
+//			e.setLocation(loc);
+//			this.repository.save(e);
+//		} catch (IOException e1) {
+//			e1.printStackTrace();
+//		}
+//	}
+//	
 	@CrossOrigin(origins = "http://localhost:4200")
+	@PostMapping("/add")
 	@ResponseBody
-	public void addEmployee(@RequestBody String jsonObj)
-	{
-		mapper.setDateFormat(new SimpleDateFormat("yyyy/MM/dd"));
-		Employee e;
-		System.out.println(jsonObj);
-		try {
-			e = mapper.readValue(jsonObj, Employee.class);
-			Location loc = locRepository.findByCityAllIgnoreCase(e.getLocation().getCity());
-			e.setLocation(loc);
-			this.repository.save(e);
-		} catch (IOException e1) {
-			e1.printStackTrace();
-		}
+	public Employee saveEmployee(@RequestBody Employee emp){
+		return this.repository.save(emp);
+	}
+	
+	@CrossOrigin(origins = "http://localhost:4200")
+	@PostMapping("/update/{id}")
+	@ResponseBody
+	public Employee updateEmployee(@PathVariable Long id,@RequestBody Employee emp){
+		emp.setEmpId(id);
+		return this.repository.save(emp);
 	}
 	
 	@CrossOrigin(origins = "http://localhost:4200")
@@ -100,23 +115,23 @@ public class EmployeeController {
 
 	}
 	
-	@RequestMapping(method = {RequestMethod.PUT, RequestMethod.PATCH}, value="/update/{employeeId}")
-	public void update(@PathVariable Long employeeId, @RequestBody String jsonObj) {
-		mapper.setDateFormat(new SimpleDateFormat("yyyy/MM/dd"));
-		Employee e = this.repository.findOne(employeeId);
-		System.out.println(jsonObj);
-		if(e!=null){
-			try {
-				e = mapper.readValue(jsonObj, Employee.class);
-				e.setEmpId(employeeId);
-				Location loc = locRepository.findByCityAllIgnoreCase(e.getLocation().getCity());
-				e.setLocation(loc);
-				this.repository.save(e);
-			} catch (IOException e1) {
-				e1.printStackTrace();
-			}
-		}
-	}
+//	@RequestMapping(method = {RequestMethod.PUT, RequestMethod.PATCH}, value="/update/{employeeId}")
+//	public void update(@PathVariable Long employeeId, @RequestBody String jsonObj) {
+//		mapper.setDateFormat(new SimpleDateFormat("yyyy/MM/dd"));
+//		Employee e = this.repository.findOne(employeeId);
+//		System.out.println(jsonObj);
+//		if(e!=null){
+//			try {
+//				e = mapper.readValue(jsonObj, Employee.class);
+//				e.setEmpId(employeeId);
+//				Location loc = locRepository.findByCityAllIgnoreCase(e.getLocation().getCity());
+//				e.setLocation(loc);
+//				this.repository.save(e);
+//			} catch (IOException e1) {
+//				e1.printStackTrace();
+//			}
+//		}
+//	}
 	
 	@CrossOrigin(origins = "http://localhost:4200")
 	@DeleteMapping("/delete/{id}")

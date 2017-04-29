@@ -20,6 +20,7 @@ export class ContactListComponent implements OnInit {
   deleteHidden = false;
   sort = "asc";
   idContact;
+  show;
   private subscription: Subscription;
   constructor(private service: AppService, public dialog: MdDialog,
     private refreshService: RefreshService) {
@@ -65,8 +66,6 @@ export class ContactListComponent implements OnInit {
         this.delete(this.idContact);
       }
     })
-
-    //this.refreshService.notifyOther({option:"deleteId", value:this.idContact});
   }
 
   sorting() {
@@ -118,11 +117,18 @@ export class ContactListComponent implements OnInit {
     this.service.searchName(name)
       .subscribe(contacts => {
         this.contacts = contacts;
-        // if (this.contacts.length == 0) {
-        //   this.show = true;
-        // } else {
-        //   this.show = false;
-        // }
+        if (this.contacts.length == 0) {
+          this.show = true;
+        } else {
+          this.show = false;
+        }
       });
+  }
+   setImage(contact) {
+    if (contact.photo == null) {
+      return "src/app/no-image.png";
+    } else {
+      return contact.photo;
+    }
   }
 }

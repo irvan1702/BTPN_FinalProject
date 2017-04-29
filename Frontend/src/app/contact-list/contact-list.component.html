@@ -1,30 +1,32 @@
-<section class = "contact-wrapper">
-<section class="search-bar">   
-    <md-toolbar color="accent">
-        <md-icon svgIcon = "search"></md-icon>
-        <md-input-container>
-            <input mdInput type="text" (keyup)="onChange($event)">
-        </md-input-container>
-        
-        <section class = "sort">
-        <button md-icon-button (click)="sorting()"><md-icon svgIcon="sort_by_alpha" ></md-icon></button>
-        <button md-icon-button (click)="openFilterDialog()"><md-icon svgIcon="filter_list"></md-icon></button>
-        <button md-icon-button (click)="openDeleteDialog()" *ngIf="deleteHidden"><md-icon svgIcon="delete" ></md-icon></button>
-        </section>
-        <section class = "chip">
-            <md-chip-list>
-                <md-chip>{{contacts?contacts.length:0}}</md-chip>
-            </md-chip-list>
-        </section>
-    </md-toolbar>
-</section>
-<section class="contact-list">
-  <md-card *ngFor="let contact of contacts" (click) = "onClick(contact.empId)">
-    <img class="user-img" src="src/app/no-image.png" width="40" height="40">
-    <md-card-title  class = "title">{{contact.firstName}} {{contact.lastName}}</md-card-title>
-    <md-card-subtitle class = "subtitle">{{contact.grade}} {{contact.division}} </md-card-subtitle>
-    <md-card-subtitle class = "subtitle">{{contact.location.city}} {{contact.phone}}</md-card-subtitle>
-  </md-card>
-  <button md-fab (click)="addContact()"><md-icon svgIcon="add" ></md-icon></button>
-</section>
-</section>
+<section class="contact-wrapper">
+    <section class="search-bar">
+        <md-toolbar color="accent">
+            <md-icon svgIcon="search"></md-icon>
+            <md-input-container>
+                <input mdInput type="text" (keyup)="onChange($event)">
+            </md-input-container>
+
+            <section class="sort">
+                <button md-icon-button (click)="sorting()"><md-icon svgIcon="sort_by_alpha" ></md-icon></button>
+                <button md-icon-button (click)="openFilterDialog()"><md-icon svgIcon="filter_list"></md-icon></button>
+                <button md-icon-button (click)="openDeleteDialog()" *ngIf="deleteHidden"><md-icon svgIcon="delete" ></md-icon></button>
+            </section>
+            <section class="chip">
+                <md-chip-list>
+                    <md-chip>{{contacts?contacts.length:0}}</md-chip>
+                </md-chip-list>
+            </section>
+        </md-toolbar>
+    </section>
+    <section class="contact-list" *ngIf="!show">
+        <md-card *ngFor="let contact of contacts" (click)="onClick(contact.empId)">
+            <img class="user-img" [src]="setImage(contact) | safeUrl"  width="40" height="40">
+            <md-card-title class="title">{{contact.firstName}} {{contact.lastName}}</md-card-title>
+            <md-card-subtitle class="subtitle">{{contact.grade}} {{contact.division}} </md-card-subtitle>
+            <md-card-subtitle class="subtitle">{{contact.location.city}} {{contact.phone}}</md-card-subtitle>
+        </md-card>
+        <button md-fab (click)="addContact()"><md-icon svgIcon="add" ></md-icon></button>
+    </section>
+    <section *ngIf="show">
+        <h1>The contact that you searched is not existed</h1>
+    </section>

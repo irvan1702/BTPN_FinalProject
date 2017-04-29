@@ -4,6 +4,9 @@ import { RefreshService } from 'app/refresh.service'
 import { Subscription } from 'rxjs/Subscription';
 import { AppService } from 'app/app.service';
 import { DatePipe } from '@angular/common';
+import { Employee } from "app/employee.model";
+import { Location } from "app/location.model";
+import { SafeUrl } from 'app/safeUrl.pipe';
 
 @Component({
   selector: 'form-contact',
@@ -12,15 +15,28 @@ import { DatePipe } from '@angular/common';
 })
 
 export class FormComponent implements OnInit {
-  contactForm
-
+  contactForm;
+  employee: Employee;
+  location: Location;
+  locations: Location[];
+  photo;
+  image;
+  employeeId=null;
   private subscription: Subscription
   constructor(private formBuilder: FormBuilder,
-    private refreshService: RefreshService, 
-    private service:AppService, 
+    private refreshService: RefreshService,
+    private service: AppService,
     private datepipe: DatePipe) { }
 
   ngOnInit() {
+
+    this.service.getLocations()
+      .subscribe(response => {
+
+        this.locations = response
+        console.log(this.locations)
+      });
+
 
     this.contactForm = this.formBuilder.group({
       firstName: this.formBuilder.control(''),
@@ -39,15 +55,16 @@ export class FormComponent implements OnInit {
       email: this.formBuilder.control(''),
       location: this.formBuilder.control(''),
     });
-
+    this.photo = "src/app/no-image.png";
     this.subscription = this.refreshService.notifyObservable$.subscribe((res) => {
       if (res.hasOwnProperty('option') && res.option === 'reset') {
         this.contactForm.reset();
       }
       else if (res.hasOwnProperty('option') && res.option === 'showToForm') {
-        let data=res.value;
+        let data = res.value;
         let tempDate = ""
         console.log(data.dateOfBirth);
+        this.employeeId=data.empId;
         this.contactForm.controls['firstName'].setValue(data.firstName);
         this.contactForm.controls['lastName'].setValue(data.lastName);
         this.contactForm.controls['gender'].setValue(data.gender);
@@ -67,22 +84,69 @@ export class FormComponent implements OnInit {
 
         var contactHiredDate = new Date(data.hiredDate);
         tempDate = this.datepipe.transform(contactHiredDate, 'yyyy-MM-dd');
-        this.contactForm.controls['hiredDate'].setValue(data.hiredDate);
-        
+        this.contactForm.controls['hiredDate'].setValue(tempDate);
+
         this.contactForm.controls['grade'].setValue(data.grade);
         this.contactForm.controls['division'].setValue(data.division);
         this.contactForm.controls['subDivision'].setValue(data.subDivision);
         this.contactForm.controls['email'].setValue(data.email);
-        //this.contactForm.controls['location'].setValue(data.location);
+        this.contactForm.controls['location'].setValue(data.location.id);
+        console.log(data.photo);
+        if (data.photo != null) {
+          this.photo = data.photo;
+        }
+        else {
+          this.photo = "src/app/no-image.png";
+        }
 
       }
     }
     )
   }
 
-  onSubmit(formValue){
-    this.service.addEmployee(formValue).subscribe(()=>{
-                this.refreshService.notifyOther({ option: 'add', value: "" });
-            });
+  onSubmit(employee) {
+    const location: Location = {
+      id: employee.location,
+      city: ''
+    };
+    employee.location = location;
+    //console.log(employee.location);
+    if (this.photo != "src/app/no-image.png" && this.photo != null) {
+      employee.photo = this.photo;
+      console.log(employee.photo);
+    }
+
+    if(this.employeeId == null){
+    this.service.addEmployee(employee).subscribe(() => {
+      this.refreshService.notifyOther({ option: 'add', value: "" });
+    });
+  }
+  else{
+     this.service.updateEmployee(this.employeeId,employee).subscribe(() => {
+      this.refreshService.notifyOther({ option: 'add', value: "" });
+    });
+  }
+  }
+
+  chooseImage(event) {
+    this.image = event.target.files;
+    //console.log(this.image[0]);
+
+    var reader = new FileReader();
+    reader.onload = (event: any) => {
+      this.photo = event.target.result;
+      //console.log(this.photo);
+    }
+
+    reader.readAsDataURL(event.target.files[0]);
+
+  }
+
+  onChange(location: Location) {
+    console.log(this.employee);
+    if (this.employee.location !== undefined) {
+      this.employee.location = location;
+    }
+    //console.log(this.employee.location)
   }
 }

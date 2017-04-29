@@ -2,10 +2,13 @@ import { Injectable } from '@angular/core';
 import { Http, URLSearchParams, RequestOptions, Headers } from '@angular/http';
 import 'rxjs/add/operator/map';
 import { Observable } from 'rxjs/Rx';
+import { Employee } from './employee.model';
+import { Location } from 'app/location.model';
 
 @Injectable()
 export class AppService {
 
+private employee:Employee
   constructor(private http: Http) {
 
   }
@@ -85,16 +88,33 @@ filterByLocationAndGender(location,gender) {
       });
   }
 
-  addEmployee(contactData){
-    contactData.location={"id":"","city":contactData.location};
-    return this.http.post('http://localhost:8080/employee/add',contactData).
-    map(() => {
-      return "";
-    });
+  // addEmployee(contactData){
+  //   contactData.location={"id":"","city":contactData.location};
+  //   return this.http.post('http://localhost:8080/employee/add',contactData).
+  //   map(() => {
+  //     return "";
+  //   });
+  // }
+
+addEmployee(employee: Employee): Observable<Employee> {
+
+    let headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+
+    // if (empId != 'new' || empId != null) {
+    //   let url = "/api/employees/" + employee.empId;
+    //   return this.http.put(url, JSON.stringify(employee), { headers: headers })
+    //     .map(response => response.json());
+    // } else {
+      let url = 'http://localhost:8080/employee/add';
+      return this.http.post(url, JSON.stringify(employee), { headers: headers })
+        .map(response => response.json());
+    //}
+
   }
 
   updateEmployee(id,contactData){
-    contactData.location={"id":"","city":contactData.location};
+    // contactData.location={"id":"","city":contactData.location};
     return this.http.post('http://localhost:8080/employee/update/'+id ,contactData).
     map(() => {
       return "";

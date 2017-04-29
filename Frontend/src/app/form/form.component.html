@@ -1,4 +1,5 @@
 <form class="contact-form" [formGroup]="contactForm" (ngSubmit)="onSubmit(contactForm.value)">
+    <h1>Contact Detail</h1>
     <table>
         <tr>
             <td>
@@ -14,9 +15,9 @@
                 </md-input-container>
             </td>
             <td>
-                <md-input-container class="input-style">
-                    <input md-card-avatar [src]="">
-                </md-input-container>
+                <img class="img-card" [src]="photo | safeUrl" (click)="fileInput.click()" />
+                <input name="photo" id="photo" class="file-chooser" #fileInput type="file" hidden="hidden" accept="image/*" (change)="chooseImage($event)"
+                />
             </td>
         </tr>
         <tr>
@@ -102,11 +103,13 @@
                     <input mdInput formControlName="email">
                 </md-input-container>
             </td>
+        </tr>
+        <tr>
             <td>
-                <md-input-container class="input-style">
-                    <label>Location</label>
-                    <input mdInput formControlName="location">
-                </md-input-container>
+                <label>Location</label>
+                <md-select class="select-option" name="location" id="location" placeholder="Location" formControlName="location">
+                    <md-option *ngFor="let l of locations" [value]="l.id" >{{ l.city }}</md-option>
+                </md-select>
             </td>
         </tr>
     </table>
