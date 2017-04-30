@@ -7,7 +7,6 @@ import {
   MdSelectModule,MdRadioModule, MdCardModule, MdTabsModule, MdDialogModule
 } from '@angular/material'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
-//import { URLSearchParams } from '@angular/http'
 import { ContactListComponent } from './contact-list/contact-list.component'
 import { NavigationComponent } from './navigation/navigation.component'
 import { FilterComponent } from './filter/filter.component'
@@ -20,8 +19,6 @@ import { BtnSvgComponent } from './btn-svg/btn-svg.component'
 import { AppComponent } from './app.component'
 import { FormComponent } from './form/form.component'
 import { AppService } from './app.service'
-import { lookupListToken, lookupLists } from './provides';
-import { Routing} from './app.routing'
 import { RefreshService } from './refresh.service'
 import 'hammerjs'
 
@@ -53,13 +50,9 @@ import 'hammerjs'
     MdChipsModule,
     MdRadioModule,
     MdSelectModule,
-    Routing,
     BrowserAnimationsModule
   ],
-  providers: [AppService,RefreshService,DatePipe,
-    {
-      provide: lookupListToken, useValue: lookupLists
-    }],
+  providers: [AppService,RefreshService,DatePipe],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

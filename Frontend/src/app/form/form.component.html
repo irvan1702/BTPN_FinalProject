@@ -1,17 +1,18 @@
-<form class="contact-form" [formGroup]="contactForm" (ngSubmit)="onSubmit(contactForm.value)">
+<section *ngIf="!isShow" class="select-message">
+    <h2>Please select employee or add new one</h2>
+</section>
+<form *ngIf="isShow" class="contact-form" [formGroup]="contactForm" (ngSubmit)="onSubmit(contactForm.value)">
     <h1>Contact Detail</h1>
     <table>
         <tr>
             <td>
                 <md-input-container class="input-style">
-                    <label>First Name</label>
-                    <input mdInput formControlName="firstName">
+                    <input mdInput placeholder="First Name" formControlName="firstName">
                 </md-input-container>
             </td>
             <td>
                 <md-input-container class="input-style">
-                    <label>Sub Division</label>
-                    <input mdInput formControlName="subDivision">
+                    <input mdInput placeholder="Sub Division" formControlName="subDivision">
                 </md-input-container>
             </td>
             <td>
@@ -23,92 +24,79 @@
         <tr>
             <td>
                 <md-input-container class="input-style">
-                    <label>Last Name</label>
-                    <input mdInput formControlName="lastName">
+                    <input mdInput placeholder="Last Name" formControlName="lastName">
                 </md-input-container>
             </td>
             <td>
                 <md-input-container class="input-style">
-                    <label>Status</label>
-                    <input mdInput formControlName="status">
+                    <input mdInput placeholder="Status" formControlName="status">
+                </md-input-container>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <md-select class="select-option" name="gender" id="gender" placeholder="Gender" formControlName="gender">
+                    <md-option *ngFor="let g of genderArr" [value]="g">{{ g }}</md-option>
+                </md-select>
+            </td>
+            <td>
+                <md-input-container class="input-style">
+                    <input mdInput type="date" placeholder="Suspend Date" formControlName="suspendDate">
                 </md-input-container>
             </td>
         </tr>
         <tr>
             <td>
                 <md-input-container class="input-style">
-                    <label>Gender</label>
-                    <input mdInput formControlName="gender">
+                    <input mdInput type="date" placeholder="Date Of Birth" formControlName="dateOfBirth">
                 </md-input-container>
             </td>
             <td>
                 <md-input-container class="input-style">
-                    <label>Suspend Date</label>
-                    <input mdInput type="date" formControlName="suspendDate">
+                    <input mdInput type="date" placeholder="Hired Date" formControlName="hiredDate">
                 </md-input-container>
             </td>
         </tr>
         <tr>
             <td>
                 <md-input-container class="input-style">
-                    <label>Date of Birth</label>
-                    <input mdInput type="date" formControlName="dateOfBirth">
+                    <input mdInput placeholder="Nationality" formControlName="nationality">
                 </md-input-container>
             </td>
             <td>
-                <md-input-container class="input-style">
-                    <label>Hired Date</label>
-                    <input mdInput type="date" formControlName="hiredDate">
-                </md-input-container>
+                <md-select class="select-option" name="grade" id="grade" placeholder="Grade" formControlName="grade">
+                    <md-option *ngFor="let r of gradeArr" [value]="r">{{ r }}</md-option>
+                </md-select>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <md-select class="select-option" name="maritalStatus" id="maritalStatus" placeholder="Marital Status" formControlName="maritalStatus">
+                    <md-option *ngFor="let m of maritalArr" [value]="m">{{ m }}</md-option>
+                </md-select>
+            </td>
+            <td>
+                <md-select class="select-option" name="division" id="division" placeholder="Division" formControlName="division">
+                    <md-option *ngFor="let d of divisionArr" [value]="d">{{ d }}</md-option>
+                </md-select>
             </td>
         </tr>
         <tr>
             <td>
                 <md-input-container class="input-style">
-                    <label>Nationality</label>
-                    <input mdInput formControlName="nationality">
+                    <input type=number mdInput placeholder="Phone" formControlName="phone">
                 </md-input-container>
             </td>
             <td>
                 <md-input-container class="input-style">
-                    <label>Grade</label>
-                    <input mdInput formControlName="grade">
+                    <input mdInput type="email" placeholder="Email" formControlName="email">
                 </md-input-container>
             </td>
         </tr>
         <tr>
             <td>
-                <md-input-container class="input-style">
-                    <label>Marital</label>
-                    <input mdInput formControlName="maritalStatus">
-                </md-input-container>
-            </td>
-            <td>
-                <md-input-container class="input-style">
-                    <label>Divison</label>
-                    <input mdInput formControlName="division">
-                </md-input-container>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <md-input-container class="input-style">
-                    <label>Phone</label>
-                    <input mdInput formControlName="phone">
-                </md-input-container>
-            </td>
-            <td>
-                <md-input-container class="input-style">
-                    <label>Email</label>
-                    <input mdInput formControlName="email">
-                </md-input-container>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <label>Location</label>
-                <md-select class="select-option" name="location" id="location" placeholder="Location" formControlName="location">
-                    <md-option *ngFor="let l of locations" [value]="l.id" >{{ l.city }}</md-option>
+                <md-select class="select-option" name="location" id="location" formControlName="location">
+                    <md-option *ngFor="let l of locations" [value]="l.id">{{ l.city }}</md-option>
                 </md-select>
             </td>
         </tr>

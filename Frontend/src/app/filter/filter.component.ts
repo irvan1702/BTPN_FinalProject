@@ -20,32 +20,15 @@ export class FilterComponent implements OnInit {
             .subscribe(data => {
                 this.locations = data;
             });
-            
+
+            // this.refreshService.notifyOther({option:"genderFilter",value:this.genderValue})
+            // this.refreshService.notifyOther({option:"locationFilter",value:this.locationValue})
     }
 
-	doFilter(){
-        if(this.genderValue===undefined && this.locationValue===undefined){
-            this.dialogRef.close;
-        }
-        else if(this.genderValue!==undefined && this.locationValue===undefined){
-            this.dialogRef.close;
-            this.service.filterByGender(this.genderValue).subscribe(data=>{
-                this.refreshService.notifyOther({ option: 'refresh', value: data });
-            });
-        }
-        else if(this.genderValue===undefined && this.locationValue!==undefined){
-            this.dialogRef.close;
-            this.service.filterByLocation(this.locationValue).subscribe(data=>{
-                this.refreshService.notifyOther({ option: 'refresh', value: data });
-            });
-        }
-        else{
-             this.dialogRef.close;
-            this.service.filterByLocationAndGender(this.locationValue,this.genderValue).subscribe(data=>{
-                this.refreshService.notifyOther({ option: 'refresh', value: data });
-            });
-        }
-        
-	}
+    resetFilter(){
+        this.genderValue=undefined;
+        this.locationValue=undefined;
+    }
+
     
 }

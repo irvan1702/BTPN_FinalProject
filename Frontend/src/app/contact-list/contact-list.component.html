@@ -19,7 +19,7 @@
         </md-toolbar>
     </section>
     <section class="contact-list" *ngIf="!show">
-        <md-card *ngFor="let contact of contacts" (click)="onClick(contact.empId)">
+        <md-card *ngFor="let contact of contacts" [ngClass]="{'selected':isSelected(contact) ,'selected':!isSelected(contact)}" (click)="onClick(contact.empId)">
             <img class="user-img" [src]="setImage(contact) | safeUrl"  width="40" height="40">
             <md-card-title class="title">{{contact.firstName}} {{contact.lastName}}</md-card-title>
             <md-card-subtitle class="subtitle">{{contact.grade}} {{contact.division}} </md-card-subtitle>

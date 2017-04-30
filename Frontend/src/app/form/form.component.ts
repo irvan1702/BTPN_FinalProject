@@ -21,8 +21,15 @@ export class FormComponent implements OnInit {
   locations: Location[];
   photo;
   image;
-  employeeId=null;
+  isShow = false;
+  employeeId = null;
   private subscription: Subscription
+
+  genderArr = ["Male", "Female"];
+  gradeArr = ["SE - JP", "SE - PG", "SE - AP", "SE - AN"];
+  divisionArr = ["SWD - TechOne", "CDC - TechOne", "MMS - TechOne", "CDC - Red", "CDC - Services", "MMS - Services", "SWD - Services", "SWD - Blue"];
+  maritalArr = ["Single", "Married"];
+
   constructor(private formBuilder: FormBuilder,
     private refreshService: RefreshService,
     private service: AppService,
@@ -32,39 +39,40 @@ export class FormComponent implements OnInit {
 
     this.service.getLocations()
       .subscribe(response => {
-
         this.locations = response
-        console.log(this.locations)
       });
 
 
     this.contactForm = this.formBuilder.group({
-      firstName: this.formBuilder.control(''),
-      lastName: this.formBuilder.control(''),
-      gender: this.formBuilder.control(''),
-      dateOfBirth: this.formBuilder.control(''),
-      nationality: this.formBuilder.control(''),
-      maritalStatus: this.formBuilder.control(''),
-      phone: this.formBuilder.control(''),
-      subDivision: this.formBuilder.control(''),
-      status: this.formBuilder.control(''),
-      suspendDate: this.formBuilder.control(''),
-      hiredDate: this.formBuilder.control(''),
-      grade: this.formBuilder.control(''),
-      division: this.formBuilder.control(''),
-      email: this.formBuilder.control(''),
-      location: this.formBuilder.control(''),
+      firstName: this.formBuilder.control('', Validators.compose([Validators.required, Validators.pattern('[\\w\\-\\s\\/]+')])),
+      lastName: this.formBuilder.control('', Validators.compose([Validators.required, Validators.pattern('[\\w\\-\\s\\/]+')])),
+      gender: this.formBuilder.control('', Validators.compose([Validators.required])),
+      dateOfBirth: this.formBuilder.control('', Validators.compose([Validators.required])),
+      nationality: this.formBuilder.control('', Validators.compose([Validators.required])),
+      maritalStatus: this.formBuilder.control('', Validators.compose([Validators.required])),
+      phone: this.formBuilder.control('', Validators.compose([Validators.required, Validators.pattern(/^[0-9\(\)\-\+]{5,25}$/)])),
+      subDivision: this.formBuilder.control('', Validators.compose([Validators.required])),
+      status: this.formBuilder.control('', Validators.compose([Validators.required])),
+      suspendDate: this.formBuilder.control('', Validators.compose([Validators.required])),
+      hiredDate: this.formBuilder.control('', Validators.compose([Validators.required])),
+      grade: this.formBuilder.control('', Validators.compose([Validators.required])),
+      division: this.formBuilder.control('', Validators.compose([Validators.required])),
+      email: this.formBuilder.control('', Validators.compose([Validators.required, Validators.pattern(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)])),
+      location: this.formBuilder.control('', Validators.compose([Validators.required])),
     });
     this.photo = "src/app/no-image.png";
     this.subscription = this.refreshService.notifyObservable$.subscribe((res) => {
       if (res.hasOwnProperty('option') && res.option === 'reset') {
+        this.employeeId = null;
         this.contactForm.reset();
+        this.photo = "src/app/no-image.png";
+        this.isShow = true;
       }
       else if (res.hasOwnProperty('option') && res.option === 'showToForm') {
+        this.isShow = true;
         let data = res.value;
         let tempDate = ""
-        console.log(data.dateOfBirth);
-        this.employeeId=data.empId;
+        this.employeeId = data.empId;
         this.contactForm.controls['firstName'].setValue(data.firstName);
         this.contactForm.controls['lastName'].setValue(data.lastName);
         this.contactForm.controls['gender'].setValue(data.gender);
@@ -91,7 +99,6 @@ export class FormComponent implements OnInit {
         this.contactForm.controls['subDivision'].setValue(data.subDivision);
         this.contactForm.controls['email'].setValue(data.email);
         this.contactForm.controls['location'].setValue(data.location.id);
-        console.log(data.photo);
         if (data.photo != null) {
           this.photo = data.photo;
         }
@@ -99,6 +106,12 @@ export class FormComponent implements OnInit {
           this.photo = "src/app/no-image.png";
         }
 
+      }
+      else if (res.hasOwnProperty('option') && res.option === 'resetForm') {
+        this.employeeId = null;
+        this.contactForm.reset();
+        this.photo = "src/app/no-image.png";
+        this.isShow = false;
       }
     }
     )
@@ -110,43 +123,41 @@ export class FormComponent implements OnInit {
       city: ''
     };
     employee.location = location;
-    //console.log(employee.location);
     if (this.photo != "src/app/no-image.png" && this.photo != null) {
       employee.photo = this.photo;
-      console.log(employee.photo);
     }
 
-    if(this.employeeId == null){
-    this.service.addEmployee(employee).subscribe(() => {
-      this.refreshService.notifyOther({ option: 'add', value: "" });
-    });
-  }
-  else{
-     this.service.updateEmployee(this.employeeId,employee).subscribe(() => {
-      this.refreshService.notifyOther({ option: 'add', value: "" });
-    });
-  }
+    if (this.employeeId == null) {
+      this.service.addEmployee(employee).subscribe(() => {
+        this.refreshService.notifyOther({ option: 'add', value: "" });
+        this.contactForm.reset();
+        this.photo = "src/app/no-image.png";
+        this.isShow = false;
+      });
+    }
+    else {
+      this.service.updateEmployee(this.employeeId, employee).subscribe(() => {
+        this.refreshService.notifyOther({ option: 'add', value: "" });
+        this.contactForm.reset();
+        this.photo = "src/app/no-image.png";
+        this.isShow = false;
+      });
+    }
   }
 
   chooseImage(event) {
     this.image = event.target.files;
-    //console.log(this.image[0]);
 
     var reader = new FileReader();
     reader.onload = (event: any) => {
       this.photo = event.target.result;
-      //console.log(this.photo);
     }
-
     reader.readAsDataURL(event.target.files[0]);
-
   }
 
   onChange(location: Location) {
-    console.log(this.employee);
     if (this.employee.location !== undefined) {
       this.employee.location = location;
     }
-    //console.log(this.employee.location)
   }
 }

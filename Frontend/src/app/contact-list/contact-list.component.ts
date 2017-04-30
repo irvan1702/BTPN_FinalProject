@@ -21,7 +21,11 @@ export class ContactListComponent implements OnInit {
   sort = "asc";
   idContact;
   show;
+  gender;
+  location;
+  selected
   private subscription: Subscription;
+
   constructor(private service: AppService, public dialog: MdDialog,
     private refreshService: RefreshService) {
 
@@ -53,6 +57,64 @@ export class ContactListComponent implements OnInit {
       height: '400px',
       width: '600px',
     });
+
+    if (this.gender != "") {
+      dialogRef.componentInstance.genderValue = this.gender;
+    }
+    if (this.location != "") {
+      dialogRef.componentInstance.locationValue = this.location;
+    }
+    dialogRef.afterClosed().subscribe(result => {
+      if (result != undefined) {
+        if (result.action == "filter") {
+          this.location = result.locValue;
+          this.gender = result.genderValue;
+
+          if (this.gender === undefined && this.location === undefined) {
+            console.log(result.locValue);
+            this.service.getAll()
+              .subscribe(data => {
+                this.contacts = data
+                this.show=false;
+              });
+          }
+
+          else if (this.gender !== undefined && this.location === undefined) {
+            this.service.filterByGender(this.gender).subscribe(data => {
+              this.contacts = data;
+              if (this.contacts.length == 0) {
+                this.show = true;
+              } else {
+                this.show = false;
+              }
+            });
+          }
+
+          else if (this.gender === undefined && this.location !== undefined) {
+            this.service.filterByLocation(this.location).subscribe(data => {
+              this.contacts = data;
+              if (this.contacts.length == 0) {
+                this.show = true;
+              } else {
+                this.show = false;
+              }
+            });
+          }
+
+          else {
+            this.service.filterByLocationAndGender(this.location, this.gender).subscribe(data => {
+              this.contacts = data;
+              if (this.contacts.length == 0) {
+                this.show = true;
+              } else {
+                this.show = false;
+              }
+            });
+          }
+        }
+      }
+
+    });
   }
 
   openDeleteDialog() {
@@ -61,8 +123,8 @@ export class ContactListComponent implements OnInit {
       width: '600px',
     });
 
-    dialogRef.afterClosed().subscribe(data =>{
-      if(data=='delete'){
+    dialogRef.afterClosed().subscribe(data => {
+      if (data == 'delete') {
         this.delete(this.idContact);
       }
     })
@@ -91,11 +153,10 @@ export class ContactListComponent implements OnInit {
   }
 
   onClick(empId) {
-    this.idContact=empId;
+    this.idContact = empId;
     this.service.getContactById(empId)
       .subscribe(data => {
         this.contact = data
-        console.log(this.contact);
         this.refreshService.notifyOther({ option: "showToForm", value: this.contact });
       });
 
@@ -111,6 +172,7 @@ export class ContactListComponent implements OnInit {
             this.deleteHidden = false;
           });
       });
+      this.refreshService.notifyOther({ option: "resetForm", value: "" });
   }
 
   getEmployees(name) {
@@ -124,11 +186,21 @@ export class ContactListComponent implements OnInit {
         }
       });
   }
-   setImage(contact) {
+  setImage(contact) {
     if (contact.photo == null) {
       return "src/app/no-image.png";
     } else {
       return contact.photo;
     }
+  }
+
+  isSelected(selected){
+    let flag = true;
+    if(this.contact!=null && selected!=null){
+      if(this.idContact===selected.empId){
+        flag=false;
+      }
+    }
+    return flag;
   }
 }

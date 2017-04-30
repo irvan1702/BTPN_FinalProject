@@ -17,6 +17,7 @@
     </section>
 </section>
 <div md-dialog-actions>
-    <button md-button (click)="doFilter()">Filter</button>
+    <button md-button (click)="dialogRef.close({action:'filter',locValue:locationValue,genderValue:genderValue})">Filter</button>
     <button md-button (click)="dialogRef.close({action:'cancel'})">Cancel</button>
+    <button md-button (click)="resetFilter()">Reset</button>
 </div>
