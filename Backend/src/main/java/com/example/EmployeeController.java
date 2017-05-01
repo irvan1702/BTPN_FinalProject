@@ -72,7 +72,7 @@ public class EmployeeController {
 	@CrossOrigin(origins = "http://localhost:4200")
 	@ResponseBody
 	public Iterable<Employee> getAllEmployee() {
-		Sort.Order sorting = new Sort.Order(Sort.Direction.ASC, "lastName").ignoreCase();
+		Sort.Order sorting = new Sort.Order(Sort.Direction.ASC, "firstName").ignoreCase();
 		return this.repository.findAll(new Sort(sorting));
 
 	}

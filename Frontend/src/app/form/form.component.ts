@@ -50,7 +50,7 @@ export class FormComponent implements OnInit {
       dateOfBirth: this.formBuilder.control('', Validators.compose([Validators.required])),
       nationality: this.formBuilder.control('', Validators.compose([Validators.required])),
       maritalStatus: this.formBuilder.control('', Validators.compose([Validators.required])),
-      phone: this.formBuilder.control('', Validators.compose([Validators.required, Validators.pattern(/^[0-9\(\)\-\+]{5,25}$/)])),
+      phone: this.formBuilder.control('', Validators.compose([Validators.required, Validators.pattern(/^[0-9]\(\)\-\+]{5,25}$/)])),
       subDivision: this.formBuilder.control('', Validators.compose([Validators.required])),
       status: this.formBuilder.control('', Validators.compose([Validators.required])),
       suspendDate: this.formBuilder.control('', Validators.compose([Validators.required])),

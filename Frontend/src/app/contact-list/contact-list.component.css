@@ -24,3 +24,8 @@
     float:left;
     width:100%;
 }
+.contactCard{
+    margin:5px;
+    width: 85%;
+    max-width: 100%;
+}

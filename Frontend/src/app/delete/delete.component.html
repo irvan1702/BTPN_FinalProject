@@ -1,6 +1,11 @@
-<h1 md-dialog-title>Are you sure want to delete the contact?</h1>
-<section md-dialog-content>
-<div md-dialog-actions>
-    <button md-button (click)="dialogRef.close('delete')">Delete</button>
-    <button md-button (click)="dialogRef.close('cancel')">Cancel</button>
-</div>
+<section class = "deleteDialog">
+<section>
+    <h1 md-dialog-title>Delete</h1>
+    <p><span class="Name">{{fullName}}</span> will be permanently removed from the contact list.</p>
+    <p>All data from this contact will be lost.</p>
+</section>
+<section md-dialog-actions class="actionButton">
+    <button md-button (click)=" dialogRef.close( 'cancel') ">Cancel</button>
+    <button md-button (click)="dialogRef.close( 'delete') ">Delete</button>
+</section>
+</section>

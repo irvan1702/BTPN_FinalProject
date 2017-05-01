@@ -1,3 +1,16 @@
-.filter {
+h1{
+    text-align: center;
+    font-size: 24px;
+}
+.md-radio-group{
 
+}
+.filterButton{
+    float:right;
+}
+.filterContent{
+    padding-top: 20px;
+}
+.filterAct{
+    padding-left: 10px;
 }

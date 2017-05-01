@@ -4,8 +4,11 @@
 .left-menu{
     float:left;
     width:30%;
+    box-sizing: border-box;
+    height: 100%;
 }
 .right-menu{
+    box-sizing: border-box;
     float:left;
     width:70%;
 }
@@ -13,3 +16,19 @@
     width: 100%;
     height: 100%;
 }
+
+.user-img{
+    border-radius: 100%;
+}
+/*.app{
+    width: 100%;
+    position: relative;
+    background-color: #e9ebee;
+    color: #1d2129;
+    font-family: Helvetica, Arial, sans-serif;
+    font-size: 12px;
+}*/
+.user-title{
+    padding-left: 10px;
+}
+

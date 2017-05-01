@@ -3,7 +3,10 @@
 </section>
 <form *ngIf="isShow" class="contact-form" [formGroup]="contactForm" (ngSubmit)="onSubmit(contactForm.value)">
     <h1>Contact Detail</h1>
-    <table>
+    <img class="img-card" [src]="photo | safeUrl" (click)="fileInput.click()" />
+    <input name="photo" id="photo" class="file-chooser" #fileInput type="file" hidden="hidden" accept="image/*" (change)="chooseImage($event)"
+    />
+    <table class = "inputContent">
         <tr>
             <td>
                 <md-input-container class="input-style">
@@ -14,11 +17,6 @@
                 <md-input-container class="input-style">
                     <input mdInput placeholder="Sub Division" formControlName="subDivision">
                 </md-input-container>
-            </td>
-            <td>
-                <img class="img-card" [src]="photo | safeUrl" (click)="fileInput.click()" />
-                <input name="photo" id="photo" class="file-chooser" #fileInput type="file" hidden="hidden" accept="image/*" (change)="chooseImage($event)"
-                />
             </td>
         </tr>
         <tr>
@@ -84,7 +82,7 @@
         <tr>
             <td>
                 <md-input-container class="input-style">
-                    <input type=number mdInput placeholder="Phone" formControlName="phone">
+                    <input  mdInput placeholder="Phone" formControlName="phone">
                 </md-input-container>
             </td>
             <td>
@@ -95,7 +93,7 @@
         </tr>
         <tr>
             <td>
-                <md-select class="select-option" name="location" id="location" formControlName="location">
+                <md-select class="select-option" placeholder="Location" name="location" id="location" formControlName="location">
                     <md-option *ngFor="let l of locations" [value]="l.id">{{ l.city }}</md-option>
                 </md-select>
             </td>

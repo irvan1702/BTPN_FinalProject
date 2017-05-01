@@ -1,23 +1,22 @@
 <h1 md-dialog-title>Contact Filter</h1>
-<section md-dialog-content>
-    <h2 md-dialog-title>Gender</h2>
-    <section>
-        <md-radio-group [(ngModel)]="genderValue">
-            <md-radio-button value="Male">Male</md-radio-button>
-            <md-radio-button value="Female">Female</md-radio-button>
-        </md-radio-group>
-    </section>
+
+<section class = "filterContent">
+    <h2 md-dialog-title>Filter by Gender</h2>
+    <md-radio-group [(ngModel)]="genderValue">
+        <md-radio-button value="Male" class = "filterAct">Male</md-radio-button>
+        <md-radio-button value="Female" class = "filterAct">Female</md-radio-button>
+    </md-radio-group>
 </section>
-<section md-dialog-content>
-    <h2 md-dialog-title>Location</h2>
-    <section>
-        <md-radio-group [(ngModel)]="locationValue">
-            <md-radio-button *ngFor="let location of locations" [value]="location.city">{{location.city}}</md-radio-button>
-        </md-radio-group>
-    </section>
+
+<section class = "filterContent">
+    <h2 md-dialog-title>Filter by Location</h2>
+    <md-radio-group [(ngModel)]="locationValue">
+        <md-radio-button *ngFor="let location of locations" [value]="location.city" class = "filterAct">{{location.city}}</md-radio-button>
+    </md-radio-group>
 </section>
-<div md-dialog-actions>
+
+<section md-dialog-actions class = "filterButton">
     <button md-button (click)="dialogRef.close({action:'filter',locValue:locationValue,genderValue:genderValue})">Filter</button>
     <button md-button (click)="dialogRef.close({action:'cancel'})">Cancel</button>
-    <button md-button (click)="resetFilter()">Reset</button>
-</div>
+    <button md-button (click)="resetFilter()">Reset Filter</button>
+</section>

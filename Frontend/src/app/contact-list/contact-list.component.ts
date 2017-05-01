@@ -119,10 +119,9 @@ export class ContactListComponent implements OnInit {
 
   openDeleteDialog() {
     let dialogRef = this.dialog.open(DeleteComponent, {
-      height: '400px',
-      width: '600px',
     });
-
+    let fullName = this.contact.firstName+" "+this.contact.lastName;
+    this.refreshService.notifyOther({option:"showName", value:fullName});
     dialogRef.afterClosed().subscribe(data => {
       if (data == 'delete') {
         this.delete(this.idContact);
