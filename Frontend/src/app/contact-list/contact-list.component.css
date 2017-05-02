@@ -32,3 +32,16 @@
 .toolBar{
     background-color:cornflowerblue;
 }
+.addButton{
+    position:absolute;
+    top:750px;
+    left:420px;
+}
+.contact-list{
+    overflow: scroll;
+    height: 700px;
+}
+
+h1{
+    font-size: 24px;
+}

@@ -1,6 +1,7 @@
 .contact-form {
     padding-top: 5px;
-    height:100%;
+    height: 700px;
+    overflow: scroll;
 }
 .button-group{
     float:right;
@@ -39,4 +40,7 @@ h1{
 }
 td{
     padding-left: 20px;
+}
+.select-message{
+    overflow: hidden;
 }

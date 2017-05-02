@@ -26,7 +26,7 @@
             <md-card-subtitle class="subtitle">{{contact.grade}} {{contact.division}} </md-card-subtitle>
             <md-card-subtitle class="subtitle">{{contact.location.city}} {{contact.phone}}</md-card-subtitle>
         </md-card>
-        <button md-fab (click)="addContact()"><md-icon svgIcon="add" ></md-icon></button>
+        <button md-fab class = "addButton" (click)="addContact()"><md-icon svgIcon="add" ></md-icon></button>
     </section>
     <section *ngIf="show">
         <h1>The contact that you searched is not existed</h1>
